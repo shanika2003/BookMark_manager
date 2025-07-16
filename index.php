@@ -43,5 +43,42 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
      integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+
+     <script>
+        //load bookmarks when page loaded
+        document.addEventListener('DOMContentLoaded', function(){
+            loadBookmarks();
+        });
+
+        //function to load bookmark Form server
+        function loadBookmarks(){
+            fetch('server.php?action=get')
+            .then(response => response.json())
+            .then(data =>{
+                const container = document.getElementById('bookmarksContainer');
+                container.innerHTML = '';
+
+                if(data.length === 0){
+                    container.innerHTML = '<p class="text-muted">No bookmarks yet.Add your bookmarks!!!</p>';
+                }
+                data.forEach(bookmark => {
+                    const col = document.createElement('div');
+                    col.className = 'col-md-4 mb-4';
+                    col.innerHTML = `
+                    <div class="card bookmark-card">
+                    <div class="card-body">
+                     <h5 class="card-title">${bookmark.title}</h5>
+                     <a href = "${bookmark.ur}" target ="_blank" class="card-link">Visit</a>
+
+                     <button class="btn btn-sm btn-danger float-end">Delete</button>
+                    </div>
+                    </div>
+                    `;
+                    container.appendChild(col);
+                });
+            });
+        }
+     </script>
 </body>
+
 </html>

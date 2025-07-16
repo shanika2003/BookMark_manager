@@ -22,7 +22,7 @@ switch($action){
 
         case 'add':
             //add a new bookmark
-            json_decode(file_get_contents($file),true);
+            $bookmarks = json_decode(file_get_contents($file),true);
 
             $newBokkmark = [
                 'id' => uniqid(),
@@ -32,7 +32,7 @@ switch($action){
             ];
 
             $bookmarks[] = $newBokkmark;
-            file_put_contents($file, json_encode($Bokkmark, flags: JSON_PRETTY_PRINT));
+            file_put_contents($file, json_encode($bookmarks, flags: JSON_PRETTY_PRINT));
 
             echo json_encode(['status' => 'succes']);
             break; 
